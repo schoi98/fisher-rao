@@ -1,0 +1,4 @@
+Saddle = "(x**2 - y**2) / 3"
+Ripple = "math.sin(2 * (x**2 + y**2)) / 10"
+Bumps = "(math.sin(5*x) * math.cos(5*y)) / 5"
+Cone = "(math.sqrt(x ** 2 + y ** 2))"

@@ -3,7 +3,7 @@ import argparse
 import json
 import math
 import time
-from mayavi import mlab
+from mayavi import mlab # need to install mayavi which requires qt and qmake added to path
 from scipy.stats import multivariate_normal
 from functools import partial
 from typing import Callable, List, Tuple, Optional
@@ -84,6 +84,8 @@ def midpoint_search(
     a given surface f, the initial point, the initial direction,
     and the max distance of the geodesic to be drawn. Outputs
     the coordinates of the geodesic in 3D space.
+
+    Paper: https://cs.stanford.edu/people/jbaek/18.821.paper2.pdf 
     '''
     x_values, y_values, f_values = None, None, None
     x0, y0 = point # starting x y

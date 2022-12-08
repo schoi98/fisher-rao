@@ -1,0 +1,9 @@
+Plotting Geodesics with the Midpoint-Search Method
+
+The work was inspired by the various computational techniques that are used in practice to compute the geodesics of a surface. As we have learned,
+computing the geodesic for some arbitrary surface usually involves solving some form of differential equation,
+which calls for a variety of interesting computational algorithms in approximating values. We decided to try and plot geodesics along a curve with these methods.
+The algorithm we ended up using was the midpoint-search method, which approximates the geodesic from a point headed a certain direction by drawing a straight line in a small increment initially and then using the changes in the normal,
+which encodes the partial derivatives for some surface to determine the path of the geodesic iteratively. While we experimented with geodesics on the usual multivariate distributions originally,
+however we decided to try plotting geodesics for arbitrary surfaces later on. This led to more interesting patterns that highlighted just how different geodesics looked for various surfaces.
+Learning of the different computational approaches used in real life to approximate these geometric quantities and implementing the visualization in code was quite satisfying and fun!

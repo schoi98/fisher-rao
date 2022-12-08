@@ -126,7 +126,7 @@ def midpoint_search(
         # Check for out of bounds and max distance
         if (max(xtp1, ytp1) > UPPER_BOUND or min(xtp1, ytp1) < LOWER_BOUND) or\
             (distance is not None and np.linalg.norm(np.array((xtp1, ytp1)) - np.array((x0, y0))) >= distance):
-            print("breaking", max(xtp1, ytp1), min(xtp1, ytp1))
+            # print("breaking", max(xtp1, ytp1), min(xtp1, ytp1))
             break
     i = min(max_iter-1, i+1)
     f_values[i] = f([x_values[i], y_values[i]])
@@ -137,19 +137,21 @@ def main(args):
     try:
         with open(args.filename, 'r') as f:
             data = json.loads(f.read())
-            means = data['means']
-            covariance_matrices = data['covariance_matrices']
-            points = data['points']
-            directions = data['directions']
-            distances = data['distances']
+            means = data.get('means')
+            covariance_matrices = data.get('covariance_matrices')
+            points = data.get('points')
+            directions = data.get('directions')
+            distances = data.get('distances')
+            dots = data.get('dots')
     except Exception as e:
         print('Error Loading Data, using default values to plot')
         print(e)
         means = [[0, 0]]
         covariance_matrices = [[[1, 0],[0, 1]]]
-        points = [[(-2, -1)]]
-        directions = [[(1, 0)]]
+        points = [[(-2, -2)]]
+        directions = [[(1, 1)]]
         distances = [[None]]
+        dots = None
     # make sure we have the correct number of each parameter
     assert len(means) == len(covariance_matrices)
     assert len(points) == len(directions) and len(points) == len(distances)
@@ -171,13 +173,16 @@ def main(args):
             g_x, g_y, g_f = midpoint_search(f, point, direction, distance)
             curr_time = time.time()
             print(f"Completed: time: {curr_time - prev_time:02f}")
-            mlab.plot3d(
+            l = mlab.plot3d(
                 g_y, g_x, g_f * z_factor,
-                # color=(0, 0, 0),
-                color=colors[j%len(colors)],
+                color=(0, 0, 0),
+                # color=colors[j%len(colors)],
                 line_width=1.0)
         # Plot current distribution as surface]
-    mlab.surf(np.transpose(X), np.transpose(Y), f(grid) * z_factor, colormap='summer')
+    if dots:
+        for dot in dots:
+            mlab.points3d(dot[1], dot[0], f(dot) * z_factor, color=(0,0,0), scale_factor=0.09)
+    s = mlab.surf(np.transpose(X), np.transpose(Y), f(grid) * z_factor, colormap='autumn')
     mlab.show()
 
 if __name__ == "__main__":
